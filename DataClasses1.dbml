@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Bibliotheque" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-ME4DF7U\KHALED;Initial Catalog=Bibliotheque;Integrated Security=True" SettingsObjectName="Library.Properties.Settings" SettingsPropertyName="BibliothequeConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.user_details" Member="user_details">
+    <Type Name="user_detail">
+      <Column Name="user_id" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="designation" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="is_admin" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="user_name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.book_details" Member="book_details">
+    <Type Name="book_detail">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="book_title" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="language_book" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="no_copies" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="publication_year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="category" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="book_detail_borrower_detail" Member="borrower_details" ThisKey="id" OtherKey="id_book" Type="borrower_detail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.borrower_details" Member="borrower_details">
+    <Type Name="borrower_detail">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_book" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="borrowed_from" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="borrowed_to" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="returned" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="borrower_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="book_detail_borrower_detail" Member="book_detail" ThisKey="id_book" OtherKey="id" Type="book_detail" IsForeignKey="true" />
+      <Association Name="student_detail_borrower_detail" Member="student_detail" ThisKey="borrower_id" OtherKey="borrower_id" Type="student_detail" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.student_details" Member="student_details">
+    <Type Name="student_detail">
+      <Column Name="contact_number" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="date_of_birth" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="departement" Type="System.String" DbType="NChar(30)" CanBeNull="true" />
+      <Column Name="sex" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="student_name" Type="System.String" DbType="NChar(30)" CanBeNull="true" />
+      <Column Name="borrower_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="student_detail_borrower_detail" Member="borrower_details" ThisKey="borrower_id" OtherKey="borrower_id" Type="borrower_detail" />
+    </Type>
+  </Table>
+</Database>
